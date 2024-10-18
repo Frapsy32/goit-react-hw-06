@@ -1,28 +1,24 @@
-import css from "./Contact.module.css";
-import { ImPhone, ImUser } from "react-icons/im";
+import { useDispatch, useSelector } from "react-redux";
+import {deleteContact} from "../../redux/contactsSlice.js"
+import css from "./Contact.module.css"
 
-const Contact = ({ name, phone, deleteContacts, id }) => {
+
+export default function Contact({ card }) {
+  
+  const dispatch = useDispatch();
+
+
+  const handleDelete = (values) => {
+    dispatch(deleteContact(values));
+  };
+
   return (
-    <li className={css.contactItem}>
-      <div className={css.textWrap}>
-        <div className={css.dataWrap}>
-          <ImUser className={css.icon} size="24" />
-          <p className={css.contactName}>{name}</p>
-        </div>
-        <div className={css.dataWrap}>
-          <ImPhone className={css.icon} size="20" />
-          <p className={css.contactPhone}>{phone}</p>
-        </div>
+    <div className={css.cart}>
+      <div>
+        <p className={css.text}>{card.name}</p>
+        <p>{card.number}</p>
       </div>
-      <button
-        type="button"
-        className={css.deleteContactBtn}
-        onClick={() => deleteContacts(id)}
-      >
-        Delete
-      </button>
-    </li>
-  );
-};
-
-export default Contact;
+      <button className={css.button} onClick={()=>handleDelete(card.id)}>Delete</button>
+    </div>
+  )
+}
